@@ -10,19 +10,29 @@ hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
 hs.grid.MARGINX = 0    -- The margin between each window horizontally
 hs.grid.MARGINY = 0    -- The margin between each window vertically
-hs.grid.GRIDHEIGHT = 2  -- The number of cells high the grid is
 hs.grid.GRIDWIDTH = 8  -- The number of cells wide the grid is
+hs.grid.GRIDHEIGHT = 4  -- The number of cells high the grid is
 
 -- moves window into position
 function movewindow(pos)
   local grid
 
   local grid_positions = {
-    full = { x = 0, y = 0, w = hs.grid.GRIDWIDTH, h = 2 },
-    left_half = { x = 0, y = 0, w = hs.grid.GRIDWIDTH / 2, h = 2 },
-    right_half = { x = hs.grid.GRIDWIDTH / 2, y=0, w = hs.grid.GRIDWIDTH / 2, h = 2 },
-    left_2_3 = { x = 0, y = 0, w = 7, h = 2 },
-    right_2_3 = { x = 1, y = 0, w = 7, h = 2 }
+    full = { x = 0, y = 0, w = hs.grid.GRIDWIDTH, h = hs.grid.GRIDHEIGHT },
+    left_half = { x = 0, y = 0, w = hs.grid.GRIDWIDTH / 2, h = hs.grid.GRIDHEIGHT },
+    right_half = { x = hs.grid.GRIDWIDTH / 2, y=0, w = hs.grid.GRIDWIDTH / 2, h = hs.grid.GRIDHEIGHT },
+    left_2_3 = { x = 0, y = 0, w = 7, h = hs.grid.GRIDHEIGHT },
+    right_2_3 = { x = 1, y = 0, w = 7, h = hs.grid.GRIDHEIGHT },
+
+    top_half = { x = 0, y = 0, w = hs.grid.GRIDWIDTH, h = hs.grid.GRIDHEIGHT / 2 },
+    bottom_half = { x = 0, y = hs.grid.GRIDHEIGHT / 2, w = hs.grid.GRIDWIDTH, h = hs.grid.GRIDHEIGHT / 2 },
+
+    left_top_corner = { x = 0, y = 0, w = hs.grid.GRIDWIDTH / 2, h = hs.grid.GRIDHEIGHT / 2 },
+    left_bottom_corner = { x = 0, y = 2, w = hs.grid.GRIDWIDTH / 2, h = hs.grid.GRIDHEIGHT / 2 },
+    right_top_corner = { x = 4, y = 0, w = hs.grid.GRIDWIDTH / 2, h = hs.grid.GRIDHEIGHT / 2 },
+    right_bottom_corner = { x = 4, y = 2, w = hs.grid.GRIDWIDTH / 2, h = hs.grid.GRIDHEIGHT / 2 },
+
+    centered = { x = 2, y = 1, w = 4, h = 2 },
   }
 
   return function()
@@ -34,11 +44,22 @@ end
 local mod1 = {'ctrl', 'shift'}
 
 hs.fnutils.each({
-  { key = 's', pos = 'full' },
+  { key = 'f', pos = 'full' },
+
+  { key = 's', pos = 'centered' },
   { key = 'a', pos = 'left_half' },
   { key = 'd', pos = 'right_half' },
   { key = '.', pos = 'left_2_3' },
-  { key = '/', pos = 'right_2_3' }
+  { key = '/', pos = 'right_2_3' },
+
+  { key = 'w', pos = 'top_half' },
+  { key = 'x', pos = 'bottom_half' },
+
+  { key = 'q', pos = 'left_top_corner' },
+  { key = 'z', pos = 'left_bottom_corner' },
+  { key = 'e', pos = 'right_top_corner' },
+  { key = 'c', pos = 'right_bottom_corner' },
+
 }, function(obj)
   hs.hotkey.new(mod1, obj.key, movewindow(obj.pos)):enable()
 end)

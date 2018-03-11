@@ -24,6 +24,9 @@ function movewindow(pos)
     left_2_3 = { x = 0, y = 0, w = 7, h = hs.grid.GRIDHEIGHT },
     right_2_3 = { x = 1, y = 0, w = 7, h = hs.grid.GRIDHEIGHT },
 
+    left_5_8 = { x = 0, y = 0, w = 5, h = hs.grid.GRIDHEIGHT },
+    right_5_8 = { x = 3, y = 0, w = 5, h = hs.grid.GRIDHEIGHT },
+
     top_half = { x = 0, y = 0, w = hs.grid.GRIDWIDTH, h = hs.grid.GRIDHEIGHT / 2 },
     bottom_half = { x = 0, y = hs.grid.GRIDHEIGHT / 2, w = hs.grid.GRIDWIDTH, h = hs.grid.GRIDHEIGHT / 2 },
 
@@ -51,6 +54,8 @@ hs.fnutils.each({
   { key = 'd', pos = 'right_half' },
   { key = '.', pos = 'left_2_3' },
   { key = '/', pos = 'right_2_3' },
+  { key = ';', pos = 'left_5_8' },
+  { key = '\'', pos = 'right_5_8' },
 
   { key = 'w', pos = 'top_half' },
   { key = 'x', pos = 'bottom_half' },
@@ -63,6 +68,11 @@ hs.fnutils.each({
 }, function(obj)
   hs.hotkey.new(mod1, obj.key, movewindow(obj.pos)):enable()
 end)
+
+-- set window to 1080p
+hs.hotkey.new(mod1, 'h', function()
+  hs.window.focusedWindow():setFrame({ x = 0, y = 0, w = 1920, h = 1080 })
+end):enable()
 
 function application_positions()
   local screen = hs.screen.mainScreen():fullFrame()
@@ -82,6 +92,7 @@ function application_positions()
     ['Google Chrome'] = { x = 0, y = 0, w = screen.w - 150, h = screen.h },
     ['Sublime Text'] = { x = 150, y = 0, w = screen.w - 150, h = screen.h },
     ['Atom'] = { x = 150, y = 0, w = screen.w - 150, h = screen.h },
+    ['Code'] = { x = 150, y = 0, w = screen.w - 150, h = screen.h },
 
     iTerm = { x = 0, y = 0, w = screen.w, h = 460 },
     SourceTree = { x = 0, y = screen.h - 720, w = screen.w, h = 720 }
